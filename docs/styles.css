@@ -1,0 +1,19 @@
+body {
+  padding-top: 25px;
+}
+h3{
+  text-align: center;
+}
+.form-control {
+  display: inline;
+  width: 100px;
+  height: 25px;
+}
+label {
+  padding-top: 20px;
+  display: inline-block;
+  text-align: right;
+}
+input{
+  display: inline;
+}
