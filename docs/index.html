@@ -5,10 +5,14 @@
 </head>
 <body>
   <div class = "container">
+    <h3>Currency Converter</h3>
+    <label for="dollars">Enter a number of USD to convert: $</label>
+    <input id="dollars" class="form-control" type="text">
+    <br>
     <label for="country">Choose which country:</label>
-    <select name="country" id="country">
-      <option value=""><span id="countryName"></span></option>
-    </select>
+    <select name="country" id="country"></select>
+    <button type="submit" class="btn btn-dark">Calculate</button>
+    <div class="output"></div>
   </div>
 </body>
 </html>
