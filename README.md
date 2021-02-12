@@ -1,6 +1,6 @@
-# (Application Name)
+# Currency Exchange Calculator
 
-#### (Brief Description of Application)
+#### This application shows how much a number of USD is in other currencies.
 
 #### By Dani Renner
 
@@ -23,9 +23,9 @@
 ## Setup/Installation Requirements
 
 * You can clone the repository to your desktop
-* In the terminal, you will need to enter npm install and npm run build to use the environment.
+* You will need to add your own API key. 
+* In the terminal, navigate to the root directory. Run npm install and npm run build to use the environment.
 * In the terminal, enter npm run start to view the project in a live server. Use Chrome for best results.
-* In the terminal, enter npm run test to use Jest.
 * Open the project in a text editor to view the code.
 
 ## Known Bugs
