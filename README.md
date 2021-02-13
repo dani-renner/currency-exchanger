@@ -23,15 +23,10 @@
 ## Setup/Installation Requirements
 
 * You can clone the repository to your desktop
-* You will need to add your own API key. 
+* You will need to add your own API key. Add it as a variable called API_KEY in the .env file for security purposes.
 * In the terminal, navigate to the root directory. Run npm install and npm run build to use the environment.
 * In the terminal, enter npm run start to view the project in a live server. Use Chrome for best results.
 * Open the project in a text editor to view the code.
-
-## Known Bugs
-
-* _Any known issues_
-* _should go here_
 
 ## License
 
