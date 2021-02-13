@@ -10,38 +10,44 @@ for (let i=0;i<countries.length;i++){
   $('#country').append(`<option value="${countryCodes[i]}">${countries[i]}</option>`);
 }
 function getConversion(response) {
-  {
-  $('#output').append(`<p>${response.target_data.currency_name}</p>`);
+  if (response.result){
+    $('#output').append(`<p>${response.target_data.currency_name}</p>`);
+  }
+}
+function conversionAmount(response, dollar){
+  if (response.result){
+    dollar = parseFloat(dollar*response.conversion_rate).toFixed(2);
+    $('#output').append(`<p>${dollar}</p>`);
   }
 }
 async function apiCallMoney(userCode) {
-  const response = await MoneyService.getRate(userCode);
-  getConversion(response);
+  await MoneyService.getRate(userCode);
 }
 
 $(document).ready(function() {
   $('#button').click(function() {
     const userCountryCode = $("#country").val();
     apiCallMoney(userCountryCode);
-    // let dollarAmount = parseFloat($("#dollars").val()).toFixed(2);
-    // let val = MoneyService.getRate(userCountryCode)
-    //   .then(function(response){
-    //     return response;
-    //   });
-    // val.then(function(response){
-    //   asyncFunc(response);
-    // });
-    // async function asyncFunc(response) {
-    //   try {
-    //     const isMoney = await getConversion(response);
-    //     if (isMoney instanceof Error) {
-    //       $('#output').append(`<p>"Error"</p>`);
-    //       throw Error("call not working");
-    //     }
-    //   } catch(error) {
-    //     console.error(`${error.message}`);
-    //   }
-    // }
+    const dollarAmount = parseFloat($("#dollars").val()).toFixed(2);
+    let val = MoneyService.getRate(userCountryCode)
+      .then(function(response){
+        return response;
+      });
+    val.then(function(response){
+      asyncFunc(response);
+    });
+    async function asyncFunc(response) {
+      try {
+        const isMoney = await getConversion(response);
+        conversionAmount(response, dollarAmount);
+        if (isMoney instanceof Error) {
+          $('#output').append(`<p>"Error: currency not available"</p>`);
+          throw Error("call not working");
+        }
+      } catch(error) {
+        console.error(`${error.message}`);
+      }
+    }
   });
 });
 
