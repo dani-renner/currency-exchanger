@@ -20,6 +20,8 @@
 
 ## Description
 
+_This program uses an API called ExchangeRate. It omits countries that do not have a defined currency. For countries with multiple forms of currency, it will convert USD into whatever currency is currently most used in that country._
+
 ## Setup/Installation Requirements
 
 * You can clone the repository to your desktop
