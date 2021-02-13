@@ -10,38 +10,38 @@ for (let i=0;i<countries.length;i++){
   $('#country').append(`<option value="${countryCodes[i]}">${countries[i]}</option>`);
 }
 function getConversion(response) {
-  if (response.result){
+  {
   $('#output').append(`<p>${response.target_data.currency_name}</p>`);
   }
 }
-async function apiCallMoney() {
-  const response = await MoneyService.getRate();
+async function apiCallMoney(userCode) {
+  const response = await MoneyService.getRate(userCode);
   getConversion(response);
 }
 
 $(document).ready(function() {
   $('#button').click(function() {
     const userCountryCode = $("#country").val();
-    apiCallMoney();
-    let dollarAmount = parseFloat($("#dollars").val()).toFixed(2);
-    let val = MoneyService.getRate(userCountryCode)
-      .then(function(response){
-        return response;
-      });
-    val.then(function(response){
-      asyncFunc(response);
-    });
-    async function asyncFunc(response) {
-      try {
-        const isMoney = await getConversion(response);
-        if (isMoney instanceof Error) {
-          $('#output').append(`<p>"Error"</p>`);
-          throw Error("call not working");
-        }
-      } catch(error) {
-        console.error(`${error.message}`);
-      }
-    }
+    apiCallMoney(userCountryCode);
+    // let dollarAmount = parseFloat($("#dollars").val()).toFixed(2);
+    // let val = MoneyService.getRate(userCountryCode)
+    //   .then(function(response){
+    //     return response;
+    //   });
+    // val.then(function(response){
+    //   asyncFunc(response);
+    // });
+    // async function asyncFunc(response) {
+    //   try {
+    //     const isMoney = await getConversion(response);
+    //     if (isMoney instanceof Error) {
+    //       $('#output').append(`<p>"Error"</p>`);
+    //       throw Error("call not working");
+    //     }
+    //   } catch(error) {
+    //     console.error(`${error.message}`);
+    //   }
+    // }
   });
 });
 
