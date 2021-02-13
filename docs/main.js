@@ -10,7 +10,10 @@ for (let i=0;i<countries.length;i++){
   $('#country').append(`<option value="${countryCodes[i]}">${countries[i]}</option>`);
 }
 function getConversion(response) {
-  if (response.result){
+  if (!response.result){
+    return new Error("No data found.");
+  }
+  else{
     $('#output').append(`<p>${response.target_data.currency_name}</p>`);
   }
 }
