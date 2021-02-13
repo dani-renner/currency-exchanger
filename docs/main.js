@@ -18,7 +18,10 @@ function getConversion(response) {
   }
 }
 function conversionAmount(response, dollar){
-  if (response.result){
+  if (isNaN(dollar)){
+    $('#output').append(`<p>Please enter a number in the $ field.</p>`);
+  }
+  else {
     dollar = parseFloat(dollar*response.conversion_rate).toFixed(2);
     $('#output').append(`<p>${dollar}</p>`);
   }
