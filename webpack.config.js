@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-  entry: './docs/main.js',
+  entry: './src/js/main.js',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist')
@@ -18,7 +18,7 @@ module.exports = {
     new Dotenv(),
     new HtmlWebpackPlugin({
       title: 'Currency Exchange',
-      template: './docs/index.html',
+      template: './src/html/index.html',
       inject: 'body'
     })
   ],
