@@ -25,7 +25,6 @@ function conversionAmount(response, dollar, countryCode) {
   else {
     dollar = parseFloat(dollar*response.conversion_rates[countryCode]).toFixed(2);
     $('#output').append(`<p>${dollar}</p>`);
-    console.log(dollar);
   }
 }
 async function apiCallMoney() {
@@ -36,7 +35,6 @@ $(document).ready(function() {
   $('#button').click(function() {
     clearOutput();
     const userCountryCode = $("#country").val();
-    console.log(userCountryCode);
     apiCallMoney();
     const dollarAmount = parseFloat($("#dollars").val()).toFixed(2);
     let val = MoneyService.getRate()
