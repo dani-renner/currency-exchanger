@@ -11,6 +11,7 @@ for (let i=0;i<248;i++){
 }
 function clearOutput() {
   $('#output').text("");
+  $('#error').text("");
 }
 function getConversion(response, dollar, countryCode) {
   if (response.result==="success"){
@@ -23,7 +24,7 @@ function getConversion(response, dollar, countryCode) {
     }
   }
   else {
-    $('#output').append(`<p>There was an error: result: "${response.result}", error-type: "${response["error-type"]}"</p>`);
+    $('#error').append(`<p>There was an error: result: "${response.result}", error-type: "${response["error-type"]}"</p>`);
   }
 }
 
