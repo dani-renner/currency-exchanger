@@ -1,7 +1,7 @@
 body {
   padding-top: 25px;
 }
-h3{
+h3 {
   text-align: center;
 }
 .form-control {
@@ -14,6 +14,9 @@ label {
   display: inline-block;
   text-align: right;
 }
-input{
+input {
   display: inline;
+}
+#error {
+  color: red;
 }

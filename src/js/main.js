@@ -9,52 +9,33 @@ for (let i=0;i<248;i++){
   let countryCodes = ["AFN","EUR","ALL","DZD","USD","EUR","AOA","XCD","XCD","ARS","AMD","AWG","AUD","EUR","AZN","BSD","BHD","BDT","BBD","BYN","EUR","BZD","XOF","BMD","BTN","BOB","USD","BAM","BWP","NOK","BRL","USD","BND","BGN","XOF","BIF","CVE","KHR","XAF","CAD","KYD","XAF","XAF","CLP","CNY","AUD","AUD","COP","KMF","CDF","XAF","NZD","CRC","XOF","HRK","CUP","ANG","EUR","CZK","DKK","DJF","XCD","DOP","USD","EGP","SVC","XAF","ERN","EUR","SZL","ETB","EUR","FKP","DKK","FJD","EUR","EUR","EUR","XPF","EUR","XAF","GMD","GEL","EUR","GHS","GIP","EUR","DKK","XCD","EUR","USD","GTQ","GBP","GNF","XOF","GYD","HTG","AUD","EUR","HNL","HKD","HUF","ISK","INR","IDR","XDR","IRR","IQD","EUR","GBP","ILS","EUR","JMD","JPY","GBP","JOD","KZT","KES","AUD","KPW","KRW","KWD","KGS","LAK","EUR","LBP","LSL","LRD","LYD","CHF","EUR","EUR","MOP","MKD","MGA","MWK","MYR","MVR","XOF","EUR","USD","EUR","MRU","MUR","EUR","XUA","MXN","USD","MDL","EUR","MNT","EUR","XCD","MAD","MZN","MMK","NAD","AUD","NPR","EUR","XPF","NZD","NIO","XOF","NGN","NZD","AUD","USD","NOK","OMR","PKR","USD","PAB","PGK","PYG","PEN","PHP","NZD","PLN","EUR","USD","QAR","EUR","RON","RUB","RWF","EUR","SHP","XCD","XCD","EUR","EUR","XCD","WST","EUR","STN","SAR","XOF","RSD","SCR","SLL","SGD","ANG","XSU","EUR","EUR","SBD","SOS","ZAR","SSP","EUR","LKR","SDG","SRD","NOK","SEK","CHF","SYP","TWD","TJS","TZS","THB","USD","XOF","NZD","TOP","TTD","TND","TRY","TMT","USD","AUD","UGX","UAH","AED","GBP","USD","UYU","UZS","VUV","VES","VND","USD","XPF","MAD","YER","ZMW","ZWL"];
   $('#country').append(`<option value="${countryCodes[i]}">${countries[i]}</option>`);
 }
-function getConversion(response) {
-  if (!response.result){
-    return new Error("No data found.");
-  }
-}
 function clearOutput() {
   $('#output').text("");
 }
-function conversionAmount(response, dollar, countryCode) {
-  if (isNaN(dollar)){
-    $('#output').append(`<p>Please enter a number in the $ field.</p>`);
+function getConversion(response, dollar, countryCode) {
+  if (response.result==="success"){
+    if (isNaN(dollar)){
+      $('#output').append(`<p>Please enter a number in the $ field.</p>`);
+    }
+    else {
+      dollar = parseFloat(dollar*response.conversion_rates[countryCode]).toFixed(2);
+      $('#output').append(`<p>${dollar}</p>`);
+    }
   }
   else {
-    dollar = parseFloat(dollar*response.conversion_rates[countryCode]).toFixed(2);
-    $('#output').append(`<p>${dollar}</p>`);
+    $('#output').append(`<p>There was an error: result: "${response.result}", error-type: "${response["error-type"]}"</p>`);
   }
-}
-async function apiCallMoney() {
-  await MoneyService.getRate();
 }
 
 $(document).ready(function() {
   $('#button').click(function() {
-    clearOutput();
     const userCountryCode = $("#country").val();
-    apiCallMoney();
     const dollarAmount = parseFloat($("#dollars").val()).toFixed(2);
-    let val = MoneyService.getRate()
-      .then(function(response){
-        return response;
-      });
-    val.then(function(response){
-      asyncFunc(response);
-    });
-    async function asyncFunc(response) {
-      try {
-        const isMoney = getConversion(response);
-        conversionAmount(response, dollarAmount, userCountryCode);
-        if (isMoney instanceof Error) {
-          $('#output').append(`<p>"Error: currency not available"</p>`);
-          throw Error("call not working");
-        }
-      } catch(error) {
-        console.error(`${error.message}`);
-      }
-    }
+    clearOutput();
+    (async function () {
+      const response = await MoneyService.getRate();
+      getConversion(response, dollarAmount, userCountryCode);
+    })();
   });
 });
 
