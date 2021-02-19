@@ -15,6 +15,10 @@ function clearOutput() {
 }
 function getConversion(response, dollar, countryCode) {
   if (response.result==="success"){
+    if (!response.conversion_rates[countryCode]){
+      $('#output').append(`<p>No data for this country.</p>`);
+      return;
+    }
     if (isNaN(dollar)){
       $('#output').append(`<p>Please enter a number in the $ field.</p>`);
     }
